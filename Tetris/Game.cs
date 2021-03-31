@@ -60,16 +60,19 @@ namespace Tetris
 
         void NewShape()
         {
-            currentShape = new Shape();
-
-            //Checks for GameOver
-            if (boxes[currentShape.rootPosition] != 0)
+            if (!gameOver)
             {
+                currentShape = new Shape();
+
+                //Checks for GameOver
+                if (boxes[currentShape.rootPosition] != 0)
+                {
+                    DrawShape();
+                    Stop();
+                    return;
+                }
                 DrawShape();
-                Stop();
-                return;
             }
-            DrawShape();
         }
 
         void UndrawShape()
@@ -438,7 +441,7 @@ namespace Tetris
         }
         void Iteration()
         {
-            if (finished)
+            if (finished && !gameOver)
             {
                 finished = false;
                 Console.SetCursorPosition(width + width, Console.WindowHeight / 4);
